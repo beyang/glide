@@ -153,3 +153,7 @@ subprojects { project ->
         }
     }
 }
+
+subprojects {
+    task allDeps(type: DependencyReportTask) {}
+}
