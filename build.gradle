@@ -154,10 +154,6 @@ subprojects { project ->
     }
 }
 
-//subprojects {
-//    task allDeps(type: DependencyReportTask) {}
-//}
-
 task javaconfig2 {
     def pconfig = [:]
 
