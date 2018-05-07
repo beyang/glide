@@ -1,12 +1,8 @@
 import groovy.json.JsonOutput
-import groovy.json.JsonSlurper
 import se.bjurr.violations.gradle.plugin.ViolationsTask
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
-
-
-apply plugin: com.sourcegraph.gradle.MyPlugin
-
+//apply plugin: com.sourcegraph.gradle.MyPlugin
 
 buildscript {
     repositories {
@@ -163,40 +159,14 @@ subprojects { project ->
 //}
 
 task javaconfig2 {
+    def pconfig = [:]
+
     allprojects {
         afterEvaluate { project ->
             def info = [:]
-            info['name'] = project.name
-            info['group'] = project.group
+            info['artifactId'] = project.name
+            info['groupId'] = project.group
             info['version'] = project.version
-
-    //        project.configurations.collectMany {}
-
-            // ==========================
-
-    //        println project.properties
-
-    //        def allDeps = project.configurations.collectMany {
-    //            it.allDependencies
-    //        }.findAll { it instanceof ProjectDependency }
-    //        allDeps.each { dep ->
-    //            printf '  dep: %s\n', dep.toString()
-    //        }
-
-    //        printf '### allDeps: %s\n', allDeps.toList().toString()
-
-    //        project.configurations.implementation.allDependencies.each {
-    //            printf "%s:%s:%s", it.group, it.name, it.version
-    //        }
-
-    //        project.dependencies {
-    //
-    //        }
-
-    //        printf '  dependencies: %s\n', project.properties.dependencies.toString()
-//            printf '  properties: %s\n', project.properties
-
-
 
             def configWhitelist = [
                     "androidTestApi",
@@ -229,39 +199,26 @@ task javaconfig2 {
             }.unique()
             info['dependencies'] = deps
 
+            SourceSetContainer sourceSetContainer = project.getProperties().get('sourceSets')
+            if (sourceSetContainer) {
+                def projectDir = project.projectDir
+                def srcDirs = sourceSetContainer.getByName('main').getJava().getSrcDirs()
+                def testSrcDirs = sourceSetContainer.getByName('test').getJava().getSrcDirs()
 
-//            def deps = project.configurations.collectMany {
-//                it.allDependencies
-//            }.unique()
-//            info['dependencies'] = deps
-
-
-//            info['dependencies'] = project.configurations.testCompileClasspath.dependencies.collect {
-//                ['group': it.group, 'name': it.name, 'version': it.version]
-//            }
-
-
-            println "################"
-            println JsonOutput.toJson(info)
+                info['sourceDirectories'] = srcDirs.collect { srcDir -> projectDir.toPath().relativize(srcDir.toPath()).toString() }
+                info['testSourceDirectories'] = testSrcDirs.collect { srcDir -> projectDir.toPath().relativize(srcDir.toPath()).toString() }
+            } else {
+                info['sourceDirectories'] = 'src/main/java'
+                info['testSourceDirectories'] = 'src/test/java'
+            }
 
 
+            def projectDir = "/" + project.rootDir.toPath().relativize(project.projectDir.toPath()).toString()
+            pconfig[projectDir] = info
 
-
-//            project.configurations.each {
-//                printf '  config: %s\n', it.name
-//                it.allDependencies.each {
-//                    printf '    dep: %s:%s:%s\n', it.group, it.name, it.version
-//                }
-//            }
-
-
-
-    //        println project.getConfigurations()
-    //        project.configurations.each {
-    //            it.allDependencies.each { dep ->
-    //                printf '  %s:%s:%s\n', dep.group, dep.name, dep.version
-    //            }
-    //        }
         }
+    }
+    gradle.buildFinished {
+        println JsonOutput.prettyPrint(JsonOutput.toJson(['projects': pconfig]))
     }
 }
