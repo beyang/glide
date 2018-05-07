@@ -63,18 +63,9 @@
             </value>
           </option>
         </AndroidXmlCodeStyleSettings>
-        <JSCodeStyleSettings>
-          <option name="INDENT_CHAINED_CALLS" value="false" />
-        </JSCodeStyleSettings>
         <JavaCodeStyleSettings>
           <option name="DO_NOT_WRAP_AFTER_SINGLE_ANNOTATION" value="true" />
         </JavaCodeStyleSettings>
-        <Python>
-          <option name="USE_CONTINUATION_INDENT_FOR_ARGUMENTS" value="true" />
-        </Python>
-        <TypeScriptCodeStyleSettings>
-          <option name="INDENT_CHAINED_CALLS" value="false" />
-        </TypeScriptCodeStyleSettings>
         <XML>
           <option name="XML_ALIGN_ATTRIBUTES" value="false" />
           <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true" />
