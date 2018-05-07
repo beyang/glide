@@ -3,6 +3,7 @@ package com.sourcegraph.gradle;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.Project;
+import org.gradle.internal.impldep.com.amazonaws.util.json.Jackson;
 
 public class Greeting extends DefaultTask {
     /**
@@ -32,7 +33,11 @@ public class Greeting extends DefaultTask {
         ProjectConfig cfg = new ProjectConfig();
 
         cfg.setArtifactId(p.getName()); // assume project name is also artifact ID
-        
+        cfg.setGroupId(p.getGroup().toString()); // assume project group is also artifact Group
+
+        System.out.printf("  %s\n", Jackson.toJsonString(cfg));
+
+
 //        cfg.
 //        p.getDependencies().getModules()
 

@@ -239,3 +239,13 @@ afterEvaluate { project ->
     logger.info("Published artifacts in ${configurations.archives}:")
     configurations.archives.artifacts.files.files.each { logger.info("\t$it") }
 }
+
+//print '################### project.tasks\n'
+//project.tasks.toList().each { task ->
+//    println task
+//}
+
+// afterEvaluate { project ->
+//     uploadArchives {
+//         repositories {
+//             mavenDeployer {
