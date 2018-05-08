@@ -2,8 +2,6 @@ import groovy.json.JsonOutput
 import se.bjurr.violations.gradle.plugin.ViolationsTask
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
-apply plugin: com.sourcegraph.gradle.MyPlugin
-
 buildscript {
     repositories {
         google()
@@ -14,6 +12,9 @@ buildscript {
         maven {
             url "https://plugins.gradle.org/m2/"
         }
+        maven {
+            url uri('/home/beyang/.m2/repository')
+        }
     }
 
     dependencies {
@@ -23,9 +24,14 @@ buildscript {
         }
         classpath "se.bjurr.violations:violations-gradle-plugin:${VIOLATIONS_PLUGIN_VERSION}"
 
-        classpath group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "2.8.5"
+//        classpath group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "2.8.5"
+        classpath group: 'com.sourcegraph', name: 'gradle', version: '1.0-SNAPSHOT'
     }
 }
+
+apply plugin: com.sourcegraph.gradle.MyPlugin
+
+
 
 // See http://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html.
 if (JavaVersion.current().isJava8Compatible()) {
