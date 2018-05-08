@@ -2,7 +2,7 @@ import groovy.json.JsonOutput
 import se.bjurr.violations.gradle.plugin.ViolationsTask
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
-//apply plugin: com.sourcegraph.gradle.MyPlugin
+apply plugin: com.sourcegraph.gradle.MyPlugin
 
 buildscript {
     repositories {
