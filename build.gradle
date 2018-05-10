@@ -20,7 +20,7 @@ buildscript {
             classpath "net.ltgt.gradle:gradle-errorprone-plugin:${ERROR_PRONE_PLUGIN_VERSION}"
         }
         classpath "se.bjurr.violations:violations-gradle-plugin:${VIOLATIONS_PLUGIN_VERSION}"
-        classpath "gradle.plugin.com.sourcegraph:gradle:1.1"
+        classpath "gradle.plugin.com.sourcegraph:gradle:1.2"
     }
 }
 
